@@ -20,6 +20,7 @@ class TenantFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'slug' => $this->faker->slug(),
+            'domain' => $this->faker->domainName(),
         ];
     }
 }
