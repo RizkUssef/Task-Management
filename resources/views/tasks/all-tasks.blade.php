@@ -13,7 +13,7 @@
         @else
             <div class="flex items-center justify-center gap-5 flex-wrap divide-y divide-gray-100 overflow-hidden">
                 @foreach ($tasks as $task)
-                    <div class="flex items-center justify-between px-6 py-5 border border-gray-100 rounded-2xl shadow-sm bg-white hover:bg-gray-50 transition w-100">
+                    <div onclick="window.location.href='{{ route('tasks.show', ['task' => $task]) }}'" class="flex items-center justify-between px-6 py-5 border cursor-pointer border-gray-100 rounded-2xl shadow-sm bg-white hover:bg-gray-50 transition w-100">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-1">
                                 <h3 class="text-base font-semibold text-gray-900 truncate">
@@ -46,11 +46,11 @@
                         </div>
 
                         <div class="flex items-center gap-2 ml-4">
-                            <a href="{{ route('home', $task) }}"
+                            <a href="{{ route('home') }}"
                                 class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                                 Edit
                             </a>
-                            <form action="{{ route('home', $task) }}" method="POST"
+                            <form action="{{ route('home') }}" method="POST"
                                 onsubmit="return confirm('Delete this task?')">
                                 @csrf
                                 @method('DELETE')

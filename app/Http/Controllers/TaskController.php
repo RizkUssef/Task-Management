@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Requests\CreateTaskRequest;
 use App\Traits\RespondsWithFlash;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -18,6 +19,10 @@ class TaskController extends Controller
             ->paginate(10);
 
         return view('tasks.all-tasks', compact('tasks'));
+    }
+    public function show(Task $task)
+    {
+        return view('tasks.show', compact('task'));
     }
     public function showCreateForm()
     {
