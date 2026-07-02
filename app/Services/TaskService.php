@@ -6,6 +6,13 @@ use App\Models\Task;
 
 class TaskService
 {
+    public function all()
+    {
+        $tasks = auth()->user()->tasks()
+            ->latest()
+            ->paginate(10);
+        return $tasks;
+    }
     public function create($data)
     {
         $tenant_id = app('currentTenant')->id;

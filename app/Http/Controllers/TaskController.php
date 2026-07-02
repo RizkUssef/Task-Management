@@ -15,10 +15,7 @@ class TaskController extends Controller
     public function __construct(public TaskService $task_service) {}
     public function allTasks()
     {
-        $tasks = auth()->user()->tasks()
-            ->latest()
-            ->paginate(10);
-
+        $tasks = $this->task_service->all();
         return view('tasks.all-tasks', compact('tasks'));
     }
     public function show(Task $task)
