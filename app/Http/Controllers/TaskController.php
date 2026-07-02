@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Traits\RespondsWithFlash;
 use App\Models\Task;
 
@@ -36,6 +37,20 @@ class TaskController extends Controller
             'Task Created Successfully',
             'Task Creation Failed',
             redirect()->route('tasks')
+        );
+    }
+    public function showEditForm(Task $task)
+    {
+        return view('tasks.edit', compact('task'));
+    }
+    public function update(Task $task, UpdateTaskRequest $request)
+    {
+        $updated = $this->task_service->update($task, $request->validated());
+        return $this->respond(
+            $updated,
+            'Task Updated Successfully',
+            'Task Update Failed',
+            redirect()->route('tasks.show', $task)
         );
     }
 }

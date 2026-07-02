@@ -4,6 +4,11 @@
 
 @section('content')
     {{-- Card --}}
+    <a href="{{ route('tasks') }}"
+        class="inline-flex items-start mr-auto gap-1 text-sm font-medium text-gray-500 hover:text-indigo-600 transition mb-6">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>All Tasks</a>
     <div class="bg-white w-1/2 shadow-md rounded-2xl border border-gray-100 overflow-hidden">
 
         {{-- Header --}}
@@ -30,11 +35,10 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('home') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                <a href="{{ route('task.edit', $task) }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                     Edit
                 </a>
-                <form action="{{ route('home') }}" method="POST"
-                    onsubmit="return confirm('Delete this task?')">
+                <form action="{{ route('home') }}" method="POST" onsubmit="return confirm('Delete this task?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-sm font-medium text-red-500 hover:text-red-600">

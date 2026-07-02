@@ -13,4 +13,8 @@ class TaskService
         $data['user_id'] = auth()->user()->id;
         return Task::create($data);
     }
+    public function update(Task $task, $data)
+    {
+        return $task->update($data);
+    }
 }

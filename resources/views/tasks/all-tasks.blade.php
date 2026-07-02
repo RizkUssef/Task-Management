@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="flex items-center gap-2 ml-4">
-                            <a href="{{ route('home') }}"
+                            <a href="{{ route('task.edit', $task) }}"
                                 class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                                 Edit
                             </a>
