@@ -18,6 +18,7 @@ Route::middleware('resolve.tenant')->group(function () {
 
     Route::get("home",HomeController::class."@home")->name("home");
 
+    Route::get('tasks', TaskController::class . '@allTasks')->name('tasks');
     Route::get('tasks/create', TaskController::class . '@showCreateForm')->name('task.create');
     Route::post('tasks/create', TaskController::class . '@create')->name('handle.task.create');
 });
