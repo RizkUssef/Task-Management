@@ -6,6 +6,7 @@
 
         <div class="hidden md:flex items-center space-x-6">
             <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('task.create') }}">Tasks</a>
         </div>
 
         <div class="flex items-center space-x-4">

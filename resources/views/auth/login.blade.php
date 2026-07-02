@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Home')
+@section('title', 'Login')
 
 @section('content')
     <form method="POST" action="{{ route('handle.login') }}" class="space-y-5">

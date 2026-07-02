@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TaskController;
 
 Route::middleware('resolve.tenant')->group(function () {
     Route::get('/dashboard', function () {
@@ -16,4 +17,7 @@ Route::middleware('resolve.tenant')->group(function () {
     Route::post('logout', AuthController::class . '@logout')->name('handle.logout');
 
     Route::get("home",HomeController::class."@home")->name("home");
+
+    Route::get('tasks/create', TaskController::class . '@showCreateForm')->name('task.create');
+    Route::post('tasks/create', TaskController::class . '@create')->name('handle.task.create');
 });
