@@ -13,11 +13,6 @@ class TaskController extends Controller
 {
     use RespondsWithFlash;
     public function __construct(public TaskService $task_service) {}
-    public function allTasks()
-    {
-        $tasks = $this->task_service->all();
-        return view('tasks.all-tasks', compact('tasks'));
-    }
     public function show(Task $task)
     {
         return view('tasks.show', compact('task'));
@@ -25,6 +20,15 @@ class TaskController extends Controller
     public function showCreateForm()
     {
         return view('tasks.create');
+    }
+    public function showEditForm(Task $task)
+    {
+        return view('tasks.edit', compact('task'));
+    }
+    public function allTasks(Request $request)
+    {
+        $tasks = $this->task_service->all($request);
+        return view('tasks.all-tasks', compact('tasks'));
     }
     public function create(CreateTaskRequest $request)
     {
@@ -35,10 +39,6 @@ class TaskController extends Controller
             'Task Creation Failed',
             redirect()->route('tasks')
         );
-    }
-    public function showEditForm(Task $task)
-    {
-        return view('tasks.edit', compact('task'));
     }
     public function update(Task $task, UpdateTaskRequest $request)
     {

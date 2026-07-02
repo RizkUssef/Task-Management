@@ -3,14 +3,22 @@
 namespace App\Services;
 
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskService
 {
-    public function all()
+    public function all(Request $request)
     {
         $tasks = auth()->user()->tasks()
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
         return $tasks;
     }
     public function create($data)

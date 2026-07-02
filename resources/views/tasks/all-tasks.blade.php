@@ -6,6 +6,8 @@
 
     <div class="w-full">
         <h1 class="text-2xl font-bold mb-4">All Tasks</h1>
+        {{-- Filters --}}
+        <x-task-filters />
         @if ($tasks->isEmpty())
             <div class="bg-white border border-gray-100 rounded-2xl shadow-sm px-8 py-16 text-center">
                 <p class="text-gray-500">No tasks yet. Create your first one to get started.</p>
