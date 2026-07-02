@@ -8,9 +8,9 @@ trait RespondsWithFlash
     {
         if ($condition) {
             // Redirect to the success route if available; otherwise, redirect back with a success message.
-            return ($successResponse ?? redirect()->back())->with('success', $successMessage);
+            return ($successRoute ?? redirect()->back())->with('success', $successMessage);
         }
         // Redirect to the error route if available; otherwise, redirect back with an error message.
-        return ($errorResponse ?? redirect()->back())->with('error', $errorMessage);
+        return ($errorRoute ?? redirect()->back())->with('error', $errorMessage);
     }
 }

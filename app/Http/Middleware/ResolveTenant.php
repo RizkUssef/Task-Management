@@ -23,11 +23,10 @@ class ResolveTenant
             abort(404);
         }
 
-        if (auth()->check() && auth()->user()->tenant_id !== $tenant->id) {
+        if (auth()->check() && (int)auth()->user()->tenant_id !== $tenant->id) {
             abort(403);
         }
         app()->instance('currentTenant', $tenant);
-        // dd(app('currentTenant')->id);
 
         return $next($request);
     }

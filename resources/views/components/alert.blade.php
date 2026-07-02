@@ -13,9 +13,11 @@
 @if (session('success') || session('error'))
     <script>
         setTimeout(function() {
-            let alert = document.getElementById('alert-box');
+            const alert = document.getElementById('alert-box');
             if (alert) {
-                bootstrap.Alert.getOrCreateInstance(alert).close();
+                alert.style.transition = 'opacity 0.5s ease';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
             }
         }, 5000);
     </script>
