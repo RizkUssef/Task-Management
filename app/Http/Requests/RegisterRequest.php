@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\UniqueUsers;
 
 class RegisterRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ["required", "string", 'min:3', 'max:255',"regex:/^[\pL\s\'-]+$/u"],
-            'email' => "required|email|unique:users",
+            'email' => ["required", "email", new UniqueUsers()],
             'password' => "required|confirmed"
         ];
     }
