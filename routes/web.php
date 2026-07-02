@@ -24,4 +24,5 @@ Route::middleware('resolve.tenant')->group(function () {
     Route::post('tasks/create', TaskController::class . '@create')->name('handle.task.create');
     Route::get('tasks/{task}/edit', TaskController::class . '@showEditForm')->name('task.edit');
     Route::put('tasks/{task}', TaskController::class . '@update')->name('handle.task.update');
+    Route::delete('tasks/{task}', TaskController::class . '@delete')->name('handle.task.delete');
 });

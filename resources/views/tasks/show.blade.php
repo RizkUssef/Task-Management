@@ -38,7 +38,8 @@
                 <a href="{{ route('task.edit', $task) }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                     Edit
                 </a>
-                <form action="{{ route('home') }}" method="POST" onsubmit="return confirm('Delete this task?')">
+                <form action="{{ route('handle.task.delete', $task) }}" method="POST"
+                    onsubmit="return confirm('Delete this task?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-sm font-medium text-red-500 hover:text-red-600">

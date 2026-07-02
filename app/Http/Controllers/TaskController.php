@@ -53,4 +53,14 @@ class TaskController extends Controller
             redirect()->route('tasks.show', $task)
         );
     }
+    public function delete(Task $task)
+    {
+        $deleted = $this->task_service->delete($task);
+        return $this->respond(
+            $deleted,
+            'Task Deleted Successfully',
+            'Task Deletion Failed',
+            redirect()->route('tasks')
+        );
+    }
 }

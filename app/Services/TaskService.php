@@ -17,4 +17,8 @@ class TaskService
     {
         return $task->update($data);
     }
+    public function delete(Task $task)
+    {
+        return $task->delete();
+    }
 }

@@ -13,7 +13,8 @@
         @else
             <div class="flex items-center justify-center gap-5 flex-wrap divide-y divide-gray-100 overflow-hidden">
                 @foreach ($tasks as $task)
-                    <div onclick="window.location.href='{{ route('tasks.show', ['task' => $task]) }}'" class="flex items-center justify-between px-6 py-5 border cursor-pointer border-gray-100 rounded-2xl shadow-sm bg-white hover:bg-gray-50 transition w-100">
+                    <div onclick="window.location.href='{{ route('tasks.show', ['task' => $task]) }}'"
+                        class="flex items-center justify-center gap-5 px-6 py-5 border cursor-pointer border-gray-100 rounded-2xl shadow-sm bg-white hover:bg-gray-50 transition w-100">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-3 mb-1">
                                 <h3 class="text-base font-semibold text-gray-900 truncate">
@@ -45,12 +46,12 @@
                             </p>
                         </div>
 
-                        <div class="flex items-center gap-2 ml-4">
+                        <div class="flex items-center gap-2 ml-4" onclick="event.stopPropagation()">
                             <a href="{{ route('task.edit', $task) }}"
                                 class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                                 Edit
                             </a>
-                            <form action="{{ route('home') }}" method="POST"
+                            <form action="{{ route('handle.task.delete', $task) }}" method="POST"
                                 onsubmit="return confirm('Delete this task?')">
                                 @csrf
                                 @method('DELETE')
@@ -69,7 +70,7 @@
             </div>
         @endif
     </div>
-        <div class="ml-auto">
+    <div class="ml-auto">
         <a href="{{ route('task.create') }}"
             class="text-sm font-medium bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
             Create Task
