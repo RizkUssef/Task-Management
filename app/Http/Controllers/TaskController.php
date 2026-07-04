@@ -27,6 +27,7 @@ class TaskController extends Controller
     }
     public function allTasks(Request $request)
     {
+        // Cache::tags(["tenant:{$this->tenant_id}","user:{$task->user_id}"])->flush();
         $tasks = $this->task_service->all($request);
         return view('tasks.all-tasks', compact('tasks'));
     }

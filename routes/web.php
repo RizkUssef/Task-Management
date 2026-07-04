@@ -19,9 +19,9 @@ Route::middleware('resolve.tenant')->group(function () {
     Route::get("home",HomeController::class."@home")->name("home");
 
     Route::get('tasks', TaskController::class . '@allTasks')->name('tasks');
-    Route::get('/tasks/{task}', TaskController::class. '@show')->name('tasks.show');
     Route::get('tasks/create', TaskController::class . '@showCreateForm')->name('task.create');
     Route::post('tasks/create', TaskController::class . '@create')->name('handle.task.create');
+    Route::get('/tasks/{task}', TaskController::class. '@show')->name('tasks.show');
     Route::get('tasks/{task}/edit', TaskController::class . '@showEditForm')->name('task.edit');
     Route::put('tasks/{task}', TaskController::class . '@update')->name('handle.task.update');
     Route::delete('tasks/{task}', TaskController::class . '@delete')->name('handle.task.delete');
