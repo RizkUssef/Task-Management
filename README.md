@@ -1,58 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📋 Task Management System (Multi-Tenant)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A robust, secure, and highly optimized multi-tenant Task Management application built using **Laravel 13**, **Tailwind CSS**, and **SQL Server**. The project features scoping of data by tenant, advanced caching strategies, and user authentication.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Key Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*   **Multi-Tenancy**: Automatically resolves and bounds the current tenant via a custom subdomain/hostname middleware, separating user permissions and database scopes dynamically.
+*   **Authentication & Authorization**: Integrated secure registration, login, and tenant boundaries preventing cross-tenant access.
+*   **CRUD Operations**: Fully functional task management flow allowing users to create, view, edit, update, and delete tasks.
+*   **Task Filters & Search**: Real-time filters to search by task title and filter by status (`To Do`, `In Progress`, `Done`), with instant page clearing.
+*   **High Performance Caching**: Implements tag-based Redis caching (`Cache::tags`) for query performance. Automatically invalidates user/tenant caches on any updates or new task additions using Laravel Eloquent Observers.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+*   **Framework**: Laravel 13.x
+*   **Language**: PHP 8.3+
+*   **Database**: Microsoft SQL Server (using `sqlsrv` driver)
+*   **Cache Store**: Redis (via `predis` client)
+*   **Frontend**: HTML, Vanilla CSS, Tailwind CSS, Laravel Blade template engine
+*   **Authentication**: Custom session-based authentication
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 📂 Project Architecture & Codebase Structure
 
-## Agentic Development
+*   `app/Http/Middleware/ResolveTenant.php`: Checks and scopes the tenant instance based on hostnames.
+*   `app/Http/Controllers/TaskController.php`: Manages requests for task listing, creation, editing, and deletion.
+*   `app/Services/TaskService.php`: Core business logic for tasks, containing safe cached data queries and paginator rebuilds.
+*   `app/Observers/TaskObserver.php`: Automated caching tagging invalidation.
+*   `routes/web.php`: Defines the web routes, properly ordered to separate static assets from wildcard route model bindings.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
-```bash
-composer require laravel/boost --dev
+## 💻 Installation & Setup
 
-php artisan boost:install
-```
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/RizkUssef/Task-Management.git
+   cd Task-Management
+   ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. **Install Dependencies**:
+   ```bash
+   composer install
+   npm install
+   ```
 
-## Contributing
+3. **Configure Environment Variables**:
+   Copy `.env.example` to `.env` and fill in your SQL Server database, cache connection details, and tenant credentials.
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Run Migrations & Seeds**:
+   ```bash
+   php artisan migrate --seed
+   ```
 
-## Code of Conduct
+5. **Start Local Servers**:
+   ```bash
+   npm run dev
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🤖 AI Assistance in this Project
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+We utilized agentic AI development throughout the lifecycle of this application to resolve critical issues and design standard layouts:
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Helping in Set Design & Layout**: Assisted in standardizing Tailwind CSS layouts, micro-interactions, clean margins, and form styles across Blade templates (such as the task filter component).
+2. **Solving Complex Caching Issues**:
+   * Investigated the Laravel 13 `__PHP_Incomplete_Class` error when unserializing cached paginator structures under strict cache security configs.
+   * Solved it securely without compromising `'serializable_classes' => false` by converting query paginators to raw attribute arrays before caching, and hydrating them back to Eloquent instances (`Task::hydrate`) dynamically in-memory on demand.
+3. **Debugging Route Binding Errors**:
+   * Resolved SQL Server datatype mismatch crashes (`nvarchar to bigint` conversion failure on `[id] = create`).
+   * Detected and fixed the route order conflict where static paths (`tasks/create`) were mistakenly matched against wildcard routes (`/tasks/{task}`) by reordering routes in `web.php`.
+4. **Optimizing Config & Version Setup**: Guided configurations, Git repo setups, and cache cleaning command-flows (`php artisan optimize:clear`).
